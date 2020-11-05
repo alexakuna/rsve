@@ -3,7 +3,7 @@ export default {
     actions: {
         async login({dispatch, commit}, {email, password}) {
             try {
-                return api().post('https://rsve.herokuapp.com/api/auth/login', {email, password})
+                return api().post('/api/auth/login', {email, password})
             } catch (e) {
                 console.log(e)
             }
