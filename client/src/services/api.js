@@ -1,5 +1,6 @@
 import axios from 'axios'
 export default () => {
+    axios.defaults.headers.common['Access-Control-Request-Method'] = '*'
     return axios.create({
         baseURL: 'https://rsve.herokuapp.com/',
         headers: {
