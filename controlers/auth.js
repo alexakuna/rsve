@@ -14,6 +14,7 @@ module.exports.login = async function (req, res) {
                 email: candidate.email,
                 userId: candidate.id
             }, keys.jwt, {expiresIn: 60 * 10})
+            res.set('Access-Control-Request-Method', '*')
             res.status(200).json({token: `Bearer ${token}`, email: candidate.email})
         } else {
             res.status(401).json({message: 'Не верный пароль. Попробуйте еще раз.'})
