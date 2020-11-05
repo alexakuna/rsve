@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const cors = require('cors')
@@ -37,5 +38,16 @@ app.use('/api/planning', getPlanning)
 app.use('/api/history', getHistory)
 app.use('/api/history', getDetailHistory)
 app.use('/api/categories', getCategories)
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('dist'));
+    app.get('*', (req, res) => {
+        res.sendFile(
+            path.resolve(
+                __dirname, 'dist', 'index.html'
+            )
+        )
+    })
+}
 
 module.exports = app
