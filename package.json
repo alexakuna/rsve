@@ -13,7 +13,7 @@
     "client": "npm run serve --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "keywords": [],
+  "keywords": ["express", "vue"],
   "author": "alexakuna",
   "license": "ISC",
   "devDependencies": {

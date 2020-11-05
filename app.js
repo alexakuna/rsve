@@ -20,13 +20,13 @@ mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true
     .then(() => console.log('Connected DB'))
     .catch(error => console.log(error))
 
-app.use(cors())
 app.use(passport.initialize())
 require('./middleware/passport')(passport)
 app.use(require('morgan')('dev'))
 app.use('/public', express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cors())
 
 
 app.use('/api/auth', authRoutes)
