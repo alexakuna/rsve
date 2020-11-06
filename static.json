@@ -2,7 +2,7 @@
   "root": "dist",
   "proxies": {
     "/api/": {
-      "origin": "https://rsve.herokuapp.com"
+      "origin": "https://rsve.herokuapp.com/"
     }
   },
   "headers": {
