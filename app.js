@@ -23,7 +23,7 @@ mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true
 app.use(passport.initialize())
 require('./middleware/passport')(passport)
 app.use(require('morgan')('dev'))
-app.use('/public', express.static('public'));
+// app.use('/public', express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors())
