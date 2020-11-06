@@ -38,9 +38,4 @@ app.use('/api/history', getHistory)
 app.use('/api/history', getDetailHistory)
 app.use('/api/categories', getCategories)
 
-app.use(express.static(__dirname + "/dist/"))
-app.get(/.*/, function (req, res) {
-    res.sendFile(__dirname + "/dist/index.html")
-})
-
 module.exports = app

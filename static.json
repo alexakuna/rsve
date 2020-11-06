@@ -1,5 +1,15 @@
 {
   "root": "dist",
+  "proxies": {
+    "/api/": {
+      "origin": "https://rsve.herokuapp.com/"
+    }
+  },
+  "headers": {
+    "/**": {
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
   "clean_urls": true,
   "routes": {
     "/**": "index.html"
