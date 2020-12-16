@@ -86,7 +86,10 @@ export default {
         password: this.password
       })
 
-      if(response.data.email) this.GET_USER(response.data.email)
+      if(response.data.email) {
+        localStorage.setItem('user', response.data.email)
+        this.GET_USER(response.data.email)
+      }
 
       if(response.data.token) {
         localStorage.setItem('auth-token', response.data.token)

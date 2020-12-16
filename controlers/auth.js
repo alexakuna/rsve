@@ -13,7 +13,7 @@ module.exports.login = async function (req, res) {
             const token = jwt.sign({
                 email: candidate.email,
                 userId: candidate.id
-            }, keys.jwt, {expiresIn: 60 * 10})
+            }, keys.jwt, {expiresIn: 60 * 60})
             res.set('Access-Control-Request-Method', '*')
             res.status(200).json({token: `Bearer ${token}`, email: candidate.email})
         } else {
