@@ -20,9 +20,10 @@ module.exports.updatePageTitle = async function (req, res) {
     try {
         const data = await Pages.findOneAndUpdate(
             {_id: "5fd76620e07cba4a7b34b19a", "pages":{ $elemMatch:{ [item1]: req.body.url}}},
-            {$set:{[`pages.$.${item2}`] : req.body.show}}, {new: true})
+            {$set:{[`pages.$.${item2}`] : req.body.show || req.body.title}}, {new: true})
         res.status(200).json(data);
     } catch (e) {
         errorHandler(res, e);
+        res.status(500).json(e)
     }
 }
