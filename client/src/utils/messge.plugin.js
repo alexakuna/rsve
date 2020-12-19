@@ -9,5 +9,8 @@ export default {
         Vue.prototype.$done = function (html) {
             M.toast({html})
         }
+        Vue.prototype.$counter = function (val) {
+            M.CharacterCounter.init(val)
+        }
     }
 }
