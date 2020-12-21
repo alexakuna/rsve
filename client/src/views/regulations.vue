@@ -1,36 +1,215 @@
 <template>
-  <div>
+  <div class="row">
     <div class="page-title">
       <h3>Положение</h3>
     </div>
-    <router-link
-        :to="'/'"
-        tag="div"
-        v-for="item in ['1','2', '3','4','5','6']"
-        :key="item"
-    >
-      <div class="col s12 m6 l4 xl3">
+      <div
+        class="col s12 m6 l4 xl3"
+        v-for="(item, index) in DATA_REGULATIONS.regulations"
+        :key="item.url"
+      >
         <div class="card-panel white">
-          <img width="100%" src="https://st.depositphotos.com/2288675/3169/i/450/depositphotos_31695491-stock-photo-vintage-microphone-on-stage.jpg" alt="Rising star">
-          <h5>{{item}}</h5>
+          <div class="wrapper-img">
+            <img alt="Положение" width="100%" :src="item.img">
+            <a
+              class="btn-small waves-effect waves-light change-img"
+              @click="showImgInput($event)"
+            ><i class="material-icons">edit</i></a>
+          </div>
+
+          <div class="row hide div-udt-title">
+            <div class="input-field col s12">
+              <input
+                :data-url="item.url"
+                :id="item.url"
+                type="text"
+                class="validate"
+              >
+              <button
+                class="btn-small btn-sending"
+                @click="changeImg()"
+              >
+                <i class="material-icons">send</i>
+              </button>
+              <label :for="item.url">Ссылка на фото</label>
+            </div>
+          </div>
+
+          <span style="font-size: 16px;">{{item.title}}</span>
+          <a
+            class="btn-flat pointer"
+            @click="showTitleInput($event)"
+          >
+            <i class="material-icons">edit</i>
+          </a>
+          <div class="row hide div-udt-name">
+            <div class="input-field col s12">
+              <input
+                :data-url="item.url"
+                :id="item.url + index"
+                type="text"
+                data-length="15"
+              >
+              <button
+                  class="btn-small btn-sending"
+                  @click="changeTitleRegulation()"
+              >
+                <i class="material-icons">send</i>
+              </button>
+              <span style="padding-left: 5px" class="hide red-text">Поле не должно быть пустым и не более 15 символов</span>
+              <label :for="item.url + index">Имя положения</label>
+            </div>
+          </div>
+          <div class="switch right">
+            <label>
+              Выкл.
+              <input
+                :data-url="item.url"
+                type="checkbox"
+                @change="onChange($event)"
+                :checked="item.show"
+              >
+              <span class="lever"></span>
+              Вкл.
+            </label>
+          </div>
+          <div class="divider"></div>
           <div style="margin-bottom: 0" class="btn-wrapper row">
-            <a href="#" style="background-color: #4a148c" class="waves-effect waves-light btn btn-small">Читать</a>
-            <a href="#" style="background-color: #4a148c" class="right waves-effect waves-light btn btn-small">Скачать</a>
+            <a href="#" class="waves-effect waves-light btn btn-small">Редактировать</a>
           </div>
         </div>
       </div>
-    </router-link>
 
   </div>
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
+import messages from "@/utils/messages";
 export default {
   name: "regulations",
-  methods: {}
+  data: () => ({
+    div: '',
+    div2: '',
+    input1: '',
+    input2: '',
+    error: ''
+  }),
+  computed: {
+    ...mapGetters([
+      'DATA_REGULATIONS'
+    ])
+  },
+  methods: {
+    ...mapActions([
+        'GET_REGULATIONS_PAGES'
+    ]),
+    async onChange(e) {
+      const response = await this.$store.dispatch('isShow', {
+        url: e.target.dataset.url,
+        show: e.target.checked
+      })
+      if(response.status === 200) {
+        this.$store.state.regulations = response.data
+        this.$done(messages[response.statusText])
+      } else {
+        this.$error(response.status)
+      }
+    },
+    async changeImg() {
+      const response = await this.$store.dispatch('updateImgLink', {
+        url: this.input1.dataset.url,
+        img: this.input1.value
+      })
+      if(response.status === 200) {
+        this.$store.state.regulations = response.data
+        this.$done(messages[response.statusText])
+        this.input1.value = ''
+        this.div.classList.add('hide')
+      } else {
+        this.$error(response.status)
+        this.input1.value = ''
+      }
+    },
+    async changeTitleRegulation() {
+      if(!this.input2.value.length || this.input2.value.length > 15) {
+        this.error.classList.remove('hide')
+        this.input2.value = ''
+        return
+      }
+      const response = await this.$store.dispatch('updateTileRegulation', {
+        url: this.input2.dataset.url,
+        title: this.input2.value
+      })
+      if(response.status === 200) {
+        this.$store.state.regulations = response.data
+        this.$done(messages[response.statusText])
+        this.input2.value = ''
+        this.div2.classList.add('hide')
+      } else {
+        this.$error(response.status)
+        this.input2.value = ''
+      }
+    },
+    showImgInput(e) {
+      const el = e.target
+      this.div = el.closest('div').nextSibling
+      this.input1 = this.div.querySelector('input')
+      if(el.tagName === 'A' || el.tagName === 'I') {
+        this.div.classList.remove('hide')
+      }
+    },
+    showTitleInput(e) {
+      const el = e.target
+      this.div2 = el.closest('div').querySelector('.div-udt-name')
+      this.input2 = this.div2.querySelector('input')
+      this.error = this.div2.querySelector('span')
+      if(el.tagName === 'A' || el.tagName === 'I') {
+        this.div2.classList.remove('hide')
+      }
+    }
+  },
+  mounted() {
+    this.GET_REGULATIONS_PAGES()
+    this.$counter(document.querySelectorAll('input[type=text]'))
+  },
+  updated() {
+    this.$counter(document.querySelectorAll('input[type=text]'))
+  }
 }
 </script>
 
 <style scoped>
-
+.divider {
+  margin-bottom: 12px;
+  width: 100%;
+}
+.lever {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+.wrapper-img {
+  position: relative;
+}
+.change-img {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.div-udt-title button {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+.div-udt-title, .div-udt-name {
+  margin-bottom: 0 !important;
+}
+.div-udt-name button {
+  position: absolute;
+  top: 0;
+  right: 10px;
+}
+.switch {
+  margin-bottom: 18px !important;
+}
 </style>

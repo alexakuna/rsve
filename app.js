@@ -11,7 +11,7 @@ const getProfile = require('./routs/profile')
 const getPlanning = require('./routs/planning')
 const getHistory = require('./routs/history')
 const getDetailHistory = require('./routs/detail-history')
-const getCategories = require('./routs/categories')
+const getRegulations = require('./routs/regulations')
 const getTitlesForPages = require('./routs/name-pages')
 
 const app = express()
@@ -36,7 +36,7 @@ app.use('/api/profile', getProfile)
 app.use('/api/planning', getPlanning)
 app.use('/api/history', getHistory)
 app.use('/api/history', getDetailHistory)
-app.use('/api/categories', getCategories)
+app.use('/api/regulations', getRegulations)
 
 // app.use(express.static(__dirname + "/dist/"))
 // app.get(/.*/, function (req, res) {

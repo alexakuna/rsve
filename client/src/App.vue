@@ -23,4 +23,7 @@ export default {
 <style lang="scss">
 @import "~materialize-css/dist/css/materialize.min.css";
 @import "assets/index.css";
+.app-page {
+  padding: 10px 10px !important;
+}
 </style>
