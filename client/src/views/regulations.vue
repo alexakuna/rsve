@@ -4,7 +4,7 @@
       <h3>Положение</h3>
     </div>
       <div
-        class="col s12 m6 l4 xl3"
+        class="col s12 m6 l4"
         v-for="(item, index) in DATA_REGULATIONS.regulations"
         :key="item.url"
       >
@@ -24,6 +24,7 @@
                 :id="item.url"
                 type="text"
                 class="validate"
+                @keyup.enter="changeImg()"
               >
               <button
                 class="btn-small btn-sending"
@@ -49,6 +50,7 @@
                 :id="item.url + index"
                 type="text"
                 data-length="15"
+                @keyup.enter="changeTitleRegulation()"
               >
               <button
                   class="btn-small btn-sending"
@@ -105,29 +107,33 @@ export default {
         'GET_REGULATIONS_PAGES'
     ]),
     async onChange(e) {
-      const response = await this.$store.dispatch('isShow', {
-        url: e.target.dataset.url,
-        show: e.target.checked
-      })
-      if(response.status === 200) {
-        this.$store.state.regulations = response.data
-        this.$done(messages[response.statusText])
-      } else {
-        this.$error(response.status)
+      try {
+        const response = await this.$store.dispatch('isShow', {
+          url: e.target.dataset.url,
+          show: e.target.checked
+        })
+        if(response.status === 200) {
+          this.$store.state.regulations = response.data
+          this.$done(messages[response.statusText])
+        }
+      } catch (e) {
+        this.$error(e.response.data.message)
       }
     },
     async changeImg() {
-      const response = await this.$store.dispatch('updateImgLink', {
-        url: this.input1.dataset.url,
-        img: this.input1.value
-      })
-      if(response.status === 200) {
-        this.$store.state.regulations = response.data
-        this.$done(messages[response.statusText])
-        this.input1.value = ''
-        this.div.classList.add('hide')
-      } else {
-        this.$error(response.status)
+      try {
+        const response = await this.$store.dispatch('updateImgLink', {
+          url: this.input1.dataset.url,
+          img: this.input1.value
+        })
+        if(response.status === 200) {
+          this.$store.state.regulations = response.data
+          this.$done(messages[response.statusText])
+          this.input1.value = ''
+          this.div.classList.add('hide')
+        }
+      } catch (e) {
+        this.$error(e.response.data.message)
         this.input1.value = ''
       }
     },
@@ -137,17 +143,19 @@ export default {
         this.input2.value = ''
         return
       }
-      const response = await this.$store.dispatch('updateTileRegulation', {
-        url: this.input2.dataset.url,
-        title: this.input2.value
-      })
-      if(response.status === 200) {
-        this.$store.state.regulations = response.data
-        this.$done(messages[response.statusText])
-        this.input2.value = ''
-        this.div2.classList.add('hide')
-      } else {
-        this.$error(response.status)
+      try {
+        const response = await this.$store.dispatch('updateTileRegulation', {
+          url: this.input2.dataset.url,
+          title: this.input2.value
+        })
+        if(response.status === 200) {
+          this.$store.state.regulations = response.data
+          this.$done(messages[response.statusText])
+          this.input2.value = ''
+          this.div2.classList.add('hide')
+        }
+      } catch (e) {
+        this.$error(e.response.data.message)
         this.input2.value = ''
       }
     },
@@ -171,10 +179,10 @@ export default {
   },
   mounted() {
     this.GET_REGULATIONS_PAGES()
-    this.$counter(document.querySelectorAll('input[type=text]'))
+    this.$counter(this.$el.querySelectorAll('input[type=text]'))
   },
   updated() {
-    this.$counter(document.querySelectorAll('input[type=text]'))
+    this.$counter(this.$el.querySelectorAll('input[type=text]'))
   }
 }
 </script>

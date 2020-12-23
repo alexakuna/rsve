@@ -11,7 +11,6 @@ module.exports.getRegulations = async function (req, res) {
     }
 }
 module.exports.updateRegulations = async function (req, res) {
-    console.log(req.body)
     const keys = Object.keys(req.body)
     const item1 = keys[0]
     const item2 = keys[1]

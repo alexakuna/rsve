@@ -8,10 +8,5 @@ export default {
                 console.log(e)
             }
         }
-        // async test({dispatch, commit}) {
-        //
-        //     return api().get('/api/history', {Authorization: localStorage.getItem('auth-token')})
-        //
-        // }
     }
 }

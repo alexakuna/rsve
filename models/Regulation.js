@@ -18,6 +18,6 @@ const schema = new Schema({
     contacts: {title: String, fields: Array},
     button: String
 
-}, {collection : 'vocal'})
+}, {collection : 'reg'})
 
-module.exports = model('Vocal', schema)
+module.exports = model('regulation', schema)

@@ -15,6 +15,14 @@ export default {
       return (this.$route.meta.layout || 'empty') + '-layout'
     }
   },
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData: function () {
+      console.log('test')
+    }
+  },
   components: {
     emptyLayout, mainLayout
   }

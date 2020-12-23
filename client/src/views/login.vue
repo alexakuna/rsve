@@ -80,20 +80,21 @@ export default {
         this.$v.$touch()
         return
       }
-
-      const response = await this.$store.dispatch('login', {
-        email: this.email,
-        password: this.password
-      })
-
-      if(response.data.email) {
-        localStorage.setItem('user', response.data.email)
-        this.GET_USER(response.data.email)
-      }
-
-      if(response.data.token) {
-        localStorage.setItem('auth-token', response.data.token)
-        this.$router.push('/')
+      try {
+        const response = await this.$store.dispatch('login', {
+          email: this.email,
+          password: this.password
+        })
+        if(response.status === 200) {
+          localStorage.setItem('user', response.data.email)
+          this.GET_USER(response.data.email)
+          if(response.data.token) {
+            localStorage.setItem('auth-token', response.data.token)
+            this.$router.push('/')
+          }
+        }
+      } catch (e) {
+        this.$error(e.response.data.message)
       }
     }
   },

@@ -6,7 +6,6 @@ const keys = require('../config/keys');
 
 module.exports.login = async function (req, res) {
     const candidate = await User.findOne({email: req.body.email})
-
     if(candidate) {
         const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
         if(passwordResult) {
