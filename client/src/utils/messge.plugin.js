@@ -12,5 +12,8 @@ export default {
         Vue.prototype.$counter = function (val) {
             M.CharacterCounter.init(val)
         }
+        Vue.prototype.$popup = function () {
+           return  M.Modal
+        }
     }
 }

@@ -1,5 +1,9 @@
 <template>
   <div class="row">
+    <div class="modal">
+      <regulation />
+    </div>
+
     <div class="page-title">
       <h3>Положение</h3>
     </div>
@@ -77,7 +81,11 @@
           </div>
           <div class="divider"></div>
           <div style="margin-bottom: 0" class="btn-wrapper row">
-            <a href="#" class="waves-effect waves-light btn btn-small">Редактировать</a>
+            <a
+              class="waves-effect waves-light btn btn-small"
+              :data-id="item.id"
+              @click="getSomeRegulation($event)"
+            >Редактировать</a>
           </div>
         </div>
       </div>
@@ -86,16 +94,21 @@
 </template>
 
 <script>
+import regulation from "@/components/regulation";
 import {mapActions, mapGetters} from 'vuex'
 import messages from "@/utils/messages";
 export default {
   name: "regulations",
+  components: {
+    regulation
+  },
   data: () => ({
     div: '',
     div2: '',
     input1: '',
     input2: '',
-    error: ''
+    error: '',
+    modal: ''
   }),
   computed: {
     ...mapGetters([
@@ -175,6 +188,18 @@ export default {
       if(el.tagName === 'A' || el.tagName === 'I') {
         this.div2.classList.remove('hide')
       }
+    },
+    async getSomeRegulation(e) {
+      const id = e.target.dataset.id
+      try {
+        const response = await this.$store.dispatch('getRegulationData', {id})
+        this.$store.state.regulation = response.data
+        this.modal = this.$popup()
+        const win = this.modal.init(this.$el.querySelector('.modal'))
+        win.open()
+      } catch (e) {
+        console.log(e)
+      }
     }
   },
   mounted() {
@@ -219,5 +244,13 @@ export default {
 }
 .switch {
   margin-bottom: 18px !important;
+}
+.modal {
+  width: 80% !important;
+}
+@media only screen and (max-width: 992px) {
+  .modal {
+    width: 95% !important;
+  }
 }
 </style>

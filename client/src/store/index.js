@@ -11,6 +11,7 @@ export default new Vuex.Store({
   state: {
     sidebar: [],
     regulations: [],
+    regulation: [],
     user: localStorage.getItem('user') || ''
   },
   mutations: {
@@ -55,6 +56,9 @@ export default new Vuex.Store({
     },
     DATA_REGULATIONS(state) {
       return state.regulations
+    },
+    REGULATION_DATA(state) {
+      return state.regulation
     }
   },
   modules: {

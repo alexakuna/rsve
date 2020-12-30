@@ -7,6 +7,7 @@ const schema = new Schema({
     organizers: String,
     age: String,
     ageCategory: {title: String, name: String, description: Array},
+    test: {description: [String]},
     nominations: {title: String, name: String, description: Array},
     criteria: {title: String, name: String, description: Array},
     terms: {title: String, name: String, description: Array},
