@@ -6,8 +6,7 @@
 
 <script>
 export default {
-name: "emptyLayout"
-}
+  name: "emptyLayout"}
 </script>
 
 <style scoped>

@@ -11,7 +11,7 @@ const getProfile = require('./routs/profile')
 const getPlanning = require('./routs/planning')
 const getHistory = require('./routs/history')
 const getDetailHistory = require('./routs/detail-history')
-const getCategories = require('./routs/categories')
+const getRegulations = require('./routs/regulations')
 const getTitlesForPages = require('./routs/name-pages')
 
 const app = express()
@@ -23,7 +23,7 @@ mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true
 app.use(passport.initialize())
 require('./middleware/passport')(passport)
 app.use(require('morgan')('dev'))
-/app.use('/public', express.static('public'));
+app.use('/public', express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors())
@@ -36,11 +36,11 @@ app.use('/api/profile', getProfile)
 app.use('/api/planning', getPlanning)
 app.use('/api/history', getHistory)
 app.use('/api/history', getDetailHistory)
-app.use('/api/categories', getCategories)
+app.use('/api/regulations', getRegulations)
 
-app.use(express.static(__dirname + "/dist/"))
-app.get(/.*/, function (req, res) {
-    res.sendFile(__dirname + "/dist/index.html")
-})
+// app.use(express.static(__dirname + "/dist/"))
+// app.get(/.*/, function (req, res) {
+//     res.sendFile(__dirname + "/dist/index.html")
+// })
 
 module.exports = app

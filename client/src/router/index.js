@@ -61,6 +61,18 @@ const routes = [
     component: () => import('../views/media')
   },
   {
+    path: '/navigations',
+    name: 'navigations',
+    meta: {layout: 'main'},
+    component: () => import('../views/navigations')
+  },
+  {
+    path: '/footer-section',
+    name: 'footer-section',
+    meta: {layout: 'main'},
+    component: () => import('../views/footer-section')
+  },
+  {
     path: '/login',
     name: 'login',
     meta: {layout: 'empty'},
@@ -72,6 +84,7 @@ const routes = [
     meta: {layout: 'empty'},
     component: () => import('../views/register')
   }
+
 ]
 
 const router = new VueRouter({

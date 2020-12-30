@@ -3,9 +3,7 @@
     <navbar @click="isOpen = !isOpen"/>
     <sidebar v-model="isOpen"/>
 
-
-
-    <main class="app-content row" :class="{full: !isOpen}">
+    <main class="app-content row" :class="{full: isOpen}">
       <div class="app-page">
         <router-view />
       </div>
@@ -25,7 +23,7 @@ import sidebar from "@/views/app/sidebar";
 export default {
   name: "mainLayout",
   data: () => ({
-    isOpen: true
+    isOpen: false
   }),
   components: {navbar, sidebar}
 }
