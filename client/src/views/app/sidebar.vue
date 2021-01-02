@@ -55,4 +55,7 @@ export default {
   ul {
     margin: 0;
   }
+  .app-sidenav {
+    background: rgba(255, 255, 255, 0.9);
+  }
 </style>

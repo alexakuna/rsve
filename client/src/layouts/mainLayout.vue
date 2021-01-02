@@ -23,7 +23,7 @@ import sidebar from "@/views/app/sidebar";
 export default {
   name: "mainLayout",
   data: () => ({
-    isOpen: false
+    isOpen: true
   }),
   components: {navbar, sidebar}
 }

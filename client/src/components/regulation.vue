@@ -1,7 +1,7 @@
 <template>
   <div class="regulation-page" @click="removeAllInputs($event)">
     <h3>Положение</h3>
-
+    <p><i class="material-icons">info_outline</i>Для редактирования кликните два раза на поле.</p>
     <div class="row">
       <div class="col s12" @dblclick.prevent="createInput($event)">
         <h5 :data-name="getKey(REGULATION_DATA, REGULATION_DATA.title)"
@@ -266,11 +266,12 @@ name: "regulation",
     },
     createInput (e){
       this.elem = e.target
-      if(e.target.nextSibling && e.target.nextSibling.className === 'input-field') return
+      if(e.target.nextSibling && e.target.nextSibling.className === 'input-field' || e.target.tagName === 'INPUT') return
       this.div = document.createElement('div')
       this.div.classList.add('input-field')
       this.input = document.createElement('input')
       this.input.setAttribute('type', 'text')
+      this.input.required = true
       this.button = document.createElement('a')
       this.button.classList.add('btn-small', 'btn-save-field')
       this.button.addEventListener('click', () => this.changeField(e))
@@ -281,7 +282,13 @@ name: "regulation",
     },
     changeField: async function (e) {
       const el = e.target.nextSibling.querySelector('input')
-      console.log(el)
+      if(!el.value.length) {
+        el.classList.add('invalid')
+        this.$error('Поле не должно быть пустым')
+        return
+      } else {
+        el.classList.remove('invalid')
+      }
       const container = {
         id: this.REGULATION_DATA._id,
         index: this.elem.dataset.idx,
