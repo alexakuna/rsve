@@ -134,10 +134,20 @@ export default {
       }
     },
     async changeImg() {
+      if(!this.input1.value.length) {
+        this.input1.classList.add('invalid')
+        this.$error('Поле не должно быть пустым')
+        return
+      } else {
+        this.input1.classList.remove('invalid')
+      }
+      const str = this.input1.value.indexOf('d/')
+      const str2 = this.input1.value.lastIndexOf('/view')
+      const result = this.input1.value.substring(str + 2, str2)
       try {
         const response = await this.$store.dispatch('updateImgLink', {
           url: this.input1.dataset.url,
-          img: this.input1.value
+          img: `https://docs.google.com/uc?id=${result}`
         })
         if(response.status === 200) {
           this.$store.state.regulations = response.data

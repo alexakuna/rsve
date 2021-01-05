@@ -23,8 +23,16 @@ import sidebar from "@/views/app/sidebar";
 export default {
   name: "mainLayout",
   data: () => ({
-    isOpen: true
+    isOpen: false
   }),
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData: function () {
+      this.isOpen = !this.isOpen
+    }
+  },
   components: {navbar, sidebar}
 }
 </script>
