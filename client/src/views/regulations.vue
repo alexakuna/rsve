@@ -134,6 +134,7 @@ export default {
       }
     },
     async changeImg() {
+      let link = ''
       if(!this.input1.value.length) {
         this.input1.classList.add('invalid')
         this.$error('Поле не должно быть пустым')
@@ -141,13 +142,16 @@ export default {
       } else {
         this.input1.classList.remove('invalid')
       }
-      const str = this.input1.value.indexOf('d/')
-      const str2 = this.input1.value.lastIndexOf('/view')
-      const result = this.input1.value.substring(str + 2, str2)
+      if(this.input1.value.includes('drive.google.com')) {
+        const str = this.input1.value.indexOf('d/')
+        const str2 = this.input1.value.lastIndexOf('/view')
+        link = this.input1.value.substring(str + 2, str2)
+      }
+
       try {
         const response = await this.$store.dispatch('updateImgLink', {
           url: this.input1.dataset.url,
-          img: `https://docs.google.com/uc?id=${result}`
+          img: this.input1.value.includes('drive.google.com') ? `https://docs.google.com/uc?id=${link}` : this.input1.value
         })
         if(response.status === 200) {
           this.$store.state.regulations = response.data
