@@ -9,11 +9,11 @@
       </div>
     </main>
 
-    <div class="fixed-action-btn">
-      <router-link class="btn-floating btn-large blue" to="/record">
-        <i class="large material-icons">add</i>
-      </router-link>
-    </div>
+<!--    <div class="fixed-action-btn">-->
+<!--      <router-link class="btn-floating btn-large blue" to="/record">-->
+<!--        <i class="large material-icons">add</i>-->
+<!--      </router-link>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -23,7 +23,7 @@ import sidebar from "@/views/app/sidebar";
 export default {
   name: "mainLayout",
   data: () => ({
-    isOpen: false
+    isOpen: true
   }),
   watch: {
     '$route': 'fetchData'

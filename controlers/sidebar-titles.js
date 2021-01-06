@@ -1,7 +1,7 @@
 const Pages = require('../models/Pages')
 const errorHandler = require('../utils/errorHandler')
 
-module.exports.getTitlesForSidebar = async function (req, res) {
+module.exports.getTitlesForSidebar = async function (req, res, next) {
     try {
         const data = await Pages.findOne({_id: '5fd76620e07cba4a7b34b19a'})
         res.status(200).json(data);
@@ -9,6 +9,7 @@ module.exports.getTitlesForSidebar = async function (req, res) {
         errorHandler(res, e);
         res.status(500).json(e)
     }
+    next()
 }
 module.exports.updatePageTitle = async function (req, res) {
     const keys = Object.keys(req.body)
