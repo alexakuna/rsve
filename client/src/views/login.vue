@@ -119,15 +119,4 @@ export default {
 .auth-card {
   width: 320px !important;
 }
-.pre-loader {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: aliceblue;
-  z-index: 9999;
-  opacity: 0.7;
-}
 </style>

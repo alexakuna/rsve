@@ -1,5 +1,11 @@
 <template>
-  <div id="app">
+  <div id="app" style="position: relative">
+    <div
+        class="pre-loader"
+        :class="{hide: isVisible}"
+    >
+      <Preloader/>
+    </div>
     <component :is="layout">
       <router-view/>
     </component>
@@ -8,12 +14,14 @@
 <script>
 import emptyLayout from '@/layouts/emptyLayout'
 import mainLayout from '@/layouts/mainLayout'
-
+import Preloader from '../src/components/preloader'
+import {mapState} from 'vuex'
 export default {
   computed: {
     layout() {
       return (this.$route.meta.layout || 'empty') + '-layout'
-    }
+    },
+    ...mapState(['isVisible'])
   },
   watch: {
     '$route': 'fetchData'
@@ -24,7 +32,7 @@ export default {
     }
   },
   components: {
-    emptyLayout, mainLayout
+    emptyLayout, mainLayout, Preloader
   }
 }
 </script >
@@ -33,5 +41,27 @@ export default {
 @import "assets/index.css";
 .app-page {
   padding: 10px 10px !important;
+}
+.pre-loader {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: aliceblue;
+  z-index: 9999;
+  opacity: 0.7;
+}
+@media only screen and (max-width:425px) {
+  h1 {
+    font-size: 28px !important;
+  }
+  h3 {
+    font-size: 25px !important;
+  }
+}
+.page-title {
+  margin-bottom: 0 !important;
 }
 </style>

@@ -10,6 +10,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    isVisible: true,
     home: [],
     sidebar: [],
     regulations: [],
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    MODAL(state) {
+      return state.isVisible
+    },
     NAME_TITLES(state) {
       return state.sidebar
     },

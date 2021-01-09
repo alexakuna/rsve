@@ -1,5 +1,9 @@
 <template>
-  <div class="sidenav app-sidenav" :class="{open: !value}">
+  <div
+    class="sidenav app-sidenav"
+    :class="{open: !value}"
+    style="top: 30px !important;"
+  >
     <ul class="pages-titles">
       <li>
         <a class='dropdown-trigger' href='#' data-target='dropdown1'>Страницы</a>

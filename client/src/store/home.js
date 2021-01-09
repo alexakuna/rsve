@@ -6,6 +6,12 @@ export default {
                commit('HOME', home)
                return home
            })
+        },
+        async removeSection({commit},{index}) {
+           return api().post('/api/delete-section', {index})
+        },
+        createSection({commit},{title, description, images}) {
+           return api().post('/api/create-section', {title, description, images})
         }
     }
 }

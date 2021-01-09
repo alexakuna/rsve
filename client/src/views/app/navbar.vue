@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar orange lighten-1">
+  <nav style="height: 30px !important;" class="navbar orange lighten-1">
     <div class="nav-wrapper">
       <div class="navbar-left">
         <a href="#" @click.prevent="$emit('click')">
@@ -66,7 +66,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

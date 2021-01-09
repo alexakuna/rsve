@@ -6,6 +6,8 @@ const router = express.Router()
 
 router.get('/', passport.authenticate('jwt', {session: false}), controller.getTitlesForSidebar)
 router.get('/home', controllerHome.getHome)
+router.post('/create-section', controllerHome.createSection)
+router.post('/delete-section', controllerHome.deleteSection)
 router.patch('/update-titles', controller.updatePageTitle)
 
 module.exports = router;
