@@ -1,17 +1,17 @@
 import api from '../services/api'
 export default {
     actions: {
-        async getHomeData({commit}) {
-           api().get('/api/home').then(home => {
+        async getHomeData({commit}, {locale}) {
+           api().post('/api/home', {locale}).then(home => {
                commit('HOME', home)
                return home
            })
         },
-        async removeSection({commit},{index}) {
-           return api().post('/api/delete-section', {index})
+        async removeSection({commit},{index, locale}) {
+           return api().post('/api/delete-section', {index, locale})
         },
-        createSection({commit},{title, description, images}) {
-           return api().post('/api/create-section', {title, description, images})
+        async createSection({commit},{title, description, images, locale}) {
+           return api().post('/api/create-section', {title, description, images, locale})
         }
     }
 }

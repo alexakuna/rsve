@@ -28,7 +28,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors())
 
-
 app.use('/api/auth', authRoutes)
 app.use('/api/', getTitlesForPages)
 app.use('/api/record', getRecord)
@@ -38,9 +37,9 @@ app.use('/api/history', getHistory)
 app.use('/api/history', getDetailHistory)
 app.use('/api/regulations', getRegulations)
 
-app.use(express.static(__dirname + "/dist/"))
-app.get(/.*/, function (req, res) {
-    res.sendFile(__dirname + "/dist/index.html")
-})
+// app.use(express.static(__dirname + "/dist/"))
+// app.get(/.*/, function (req, res) {
+//     res.sendFile(__dirname + "/dist/index.html")
+// })
 
 module.exports = app

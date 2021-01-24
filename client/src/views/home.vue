@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-        'HOME_DATA', 'MODAL'
+        'HOME_DATA', 'MODAL', 'GET_LOCALE'
     ]),
     // closeMod: {
     //   get: function () {
@@ -83,7 +83,8 @@ export default {
   methods: {
     ...mapActions([
         'getHomeData',
-        'removeSection'
+        'removeSection',
+        'LOCALE_ACTION'
     ]),
     hideModal() {
       this.win.close()
@@ -91,7 +92,7 @@ export default {
     async deleteSection(index) {
       //this.closeMod = false
       try {
-        const data = await this.removeSection({index})
+        const data = await this.removeSection({index, locale: this.$store.state.locale})
         this.$store.state.home = data.data
         this.$done('Секция удалена!')
           //this.closeMod = true
@@ -107,10 +108,12 @@ export default {
     }
   },
   mounted() {
-    this.getHomeData()
+
+    if (!localStorage.getItem('locale')) {
+      localStorage.setItem('locale', 'en')
+      this.LOCALE_ACTION(localStorage.getItem('locale'))
+    }
+    this.getHomeData({locale: this.GET_LOCALE})
   }
 }
 </script>
-<style scoped>
-
-</style>

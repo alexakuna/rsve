@@ -1,14 +1,14 @@
 import api from '../services/api'
 export default {
     actions: {
-        async isShow({dispatch, commit}, {url, show}) {
-            return api().patch('/api/regulations/update-regulations', {url, show})
+        async isShow({dispatch, commit}, {url, show, locale}) {
+            return api().patch('/api/regulations/update-regulations', {url, show, locale})
         },
-        async updateTileRegulation({dispatch, commit}, {url, title}) {
-            return api().patch('/api/regulations/update-regulations', {url, title})
+        async updateTileRegulation({dispatch, commit}, {url, title, locale}) {
+            return api().patch('/api/regulations/update-regulations', {url, title, locale})
         },
-        async updateImgLink({dispatch, commit}, {url, img}) {
-            return api().patch('/api/regulations/update-regulations', {url, img})
+        async updateImgLink({dispatch, commit}, {url, img, locale}) {
+            return api().patch('/api/regulations/update-regulations', {url, img, locale})
         },
         async getRegulationData({dispatch, commit},{id}) {
             return api().post('/api/regulations/regulation', {id})

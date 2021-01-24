@@ -2,9 +2,26 @@ const Regulations = require('../models/Regulations')
 const Regulation = require('../models/Regulation')
 const errorHandler = require('../utils/errorHandler')
 
+function sortId(a, b) {
+    if (a.itemId > b.itemId) {
+        return 1;
+    }
+    if (a.itemId < b.itemId) {
+        return -1;
+    }
+    return 0;
+}
+
 module.exports.getRegulations = async function (req, res) {
     try {
-        const data = await Regulations.findOne({_id: '5fa03410b137151f4ea2865f'})
+        //const data = await Regulations.findOne({lang: req.body.locale})
+
+        const data = await Regulations.findOne({lang: req.body.locale})
+        const reg = await Regulation.find({lang: req.body.locale}, '_id itemId')
+        reg.sort(sortId)
+        data.regulations.map((i, index) => {
+            i.id = reg[index]._id
+        })
         res.status(200).json(data);
     } catch (e) {
         errorHandler(res, e);
@@ -18,7 +35,7 @@ module.exports.updateRegulations = async function (req, res) {
     try {
         const data = await Regulations.findOneAndUpdate(
             {
-                _id: "5fa03410b137151f4ea2865f",
+                lang: req.body.locale,
                 "regulations": {
                     $elemMatch: {
                         [item1]: req.body.url
@@ -51,7 +68,7 @@ module.exports.getRegulation = async function (req, res) {
     }
 }
 module.exports.updateRegulation = async function (req, res) {
-    console.log(req.body)
+
     const name = req.body.name2 ? `${req.body.name}.${req.body.name2}` : req.body.name
     let can = ''
     if(req.body.name2) {

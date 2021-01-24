@@ -83,7 +83,8 @@ export default {
       try {
         const response = await this.$store.dispatch('updateDataNavigations', {
           url: e.target.dataset.url,
-          show: e.target.checked
+          show: e.target.checked,
+          locale: this.$store.state.locale
         })
         if(response.status === 200) {
           this.$store.state.sidebar.pages = response.data.pages

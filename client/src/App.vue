@@ -60,8 +60,17 @@ export default {
   h3 {
     font-size: 25px !important;
   }
+  .card-content {
+    padding: 1rem 0 !important;
+  }
+  .card-stacked {
+    padding: 0 !important;
+  }
 }
 .page-title {
   margin-bottom: 0 !important;
+}
+.card-content {
+  padding: 1rem 1rem !important;
 }
 </style>

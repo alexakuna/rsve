@@ -7,39 +7,34 @@
         </a>
         <span class="black-text">{{date | date('datetime')}}</span>
       </div>
-
-      <ul class="right hide-on-small-and-down">
-        <li>
-          <a
-              class="dropdown-trigger black-text"
-              href="#"
-              data-target="dropdown"
-              ref="dropdown"
-          >
-            {{ USER_NAME }}
-            <i class="material-icons right">arrow_drop_down</i>
-          </a>
-
-          <ul id='dropdown' class='dropdown-content'>
-            <li class="divider" tabindex="-1"></li>
-            <li>
-              <a href="#" class="black-text" @click.prevent="logout">
-                <i class="material-icons">assignment_return</i>Выйти
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <div class="wrapper-language">
+        <button
+          id="ru-lang"
+          class="btn-lang"
+          :class="{active: this.GET_LOCALE === 'ru'}"
+          @click="changeLanguage"
+        >
+          RU
+        </button>
+        <button
+          id="en-lang"
+          class="btn-lang"
+          :class="{active: this.GET_LOCALE === 'en'}"
+          @click="changeLanguage"
+        >
+          EN
+        </button>
+      </div>
     </div>
   </nav>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
   name: "navbar",
   computed: {
-    ...mapGetters(['USER_NAME'])
+    ...mapGetters(['GET_LOCALE'])
   },
   data: () => ({
     date: new Date(),
@@ -47,16 +42,24 @@ export default {
     dropdown: null
   }),
   methods: {
-    logout() {
-      localStorage.removeItem('auth-token')
-      this.$router.push('/login?message=logout')
+    ...mapActions(['LOCALE_ACTION']),
+    changeLanguage() {
+      if(this.$store.state.locale === 'ru') {
+        localStorage.setItem('locale', 'en')
+        this.LOCALE_ACTION('en')
+        window.location.reload()
+      } else {
+        localStorage.setItem('locale', 'ru')
+        this.LOCALE_ACTION('ru')
+        window.location.reload()
+      }
     }
   },
   mounted() {
     this.interval = setInterval(() => {
       this.date = new Date()
     }, 1000)
-    this.dropdown = M.Dropdown.init(this.$refs.dropdown)
+    //this.dropdown = M.Dropdown.init(this.$refs.dropdown)
   },
   beforeDestroy() {
     clearInterval(this.interval)
@@ -66,3 +69,19 @@ export default {
   }
 }
 </script>
+<style scoped>
+.wrapper-language {
+}
+.btn-lang {
+  margin: 0.7rem;
+  display: inline-block;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  height: 100%;
+  color: black;
+}
+.active {
+  font-weight: bold;
+}
+</style>

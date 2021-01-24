@@ -1,11 +1,11 @@
 import api from '../services/api'
 export default {
     actions: {
-        updateDataNavigations({dispatch, commit}, {url, show}) {
-            return api().patch('/api/update-titles', {url, show})
+        updateDataNavigations({dispatch, commit}, {url, show, locale}) {
+            return api().patch('/api/update-titles', {url, show, locale})
         },
-        updateTileNavigations({dispatch, commit}, {url, title}) {
-            return api().patch('/api/update-titles', {url, title})
+        updateTileNavigations({dispatch, commit}, {url, title, locale}) {
+            return api().patch('/api/update-titles', {url, title, locale})
         }
     }
 }

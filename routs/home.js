@@ -3,6 +3,6 @@ const controller = require('../controlers/home')
 const passport = require('passport')
 const router = express.Router()
 
-router.get('/', passport.authenticate('jwt', {session: false}), controller.getHome)
+router.post('/', passport.authenticate('jwt', {session: false}), controller.getHome)
 
 module.exports = router;

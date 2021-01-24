@@ -1,7 +1,9 @@
 const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
+    _id: Schema.Types.ObjectID,
     title: String,
+    itemId: String,
     description: {description: String, date: String},
     category: String,
     organizers: String,
@@ -17,8 +19,8 @@ const schema = new Schema({
     privileges: {title: String, desc1: String, desc2: String, fields: Array},
     request: {title: String, fields: Array},
     contacts: {title: String, fields: Array},
-    button: String
-
+    button: String,
+    lang: String
 }, {collection : 'reg'})
 
 module.exports = model('regulation', schema)

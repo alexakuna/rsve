@@ -108,7 +108,8 @@ export default {
     input1: '',
     input2: '',
     error: '',
-    modal: ''
+    modal: '',
+    id: ''
   }),
   computed: {
     ...mapGetters([
@@ -123,8 +124,10 @@ export default {
       try {
         const response = await this.$store.dispatch('isShow', {
           url: e.target.dataset.url,
-          show: e.target.checked
+          show: e.target.checked,
+          locale: this.$store.state.locale
         })
+        console.log(response)
         if(response.status === 200) {
           this.$store.state.regulations = response.data
           this.$done(messages[response.statusText])
@@ -151,7 +154,8 @@ export default {
       try {
         const response = await this.$store.dispatch('updateImgLink', {
           url: this.input1.dataset.url,
-          img: this.input1.value.includes('drive.google.com') ? `https://docs.google.com/uc?id=${link}` : this.input1.value
+          img: this.input1.value.includes('drive.google.com') ? `https://docs.google.com/uc?id=${link}` : this.input1.value,
+          locale: this.$store.state.locale
         })
         if(response.status === 200) {
           this.$store.state.regulations = response.data
@@ -173,7 +177,8 @@ export default {
       try {
         const response = await this.$store.dispatch('updateTileRegulation', {
           url: this.input2.dataset.url,
-          title: this.input2.value
+          title: this.input2.value,
+          locale: this.$store.state.locale
         })
         if(response.status === 200) {
           this.$store.state.regulations = response.data
@@ -199,14 +204,17 @@ export default {
       this.div2 = el.closest('div').querySelector('.div-udt-name')
       this.input2 = this.div2.querySelector('input')
       this.error = this.div2.querySelector('span')
+      const div3 = this.div2.parentNode.lastChild
+      this.id = div3.querySelector('a').dataset.id
       if(el.tagName === 'A' || el.tagName === 'I') {
         this.div2.classList.remove('hide')
       }
     },
     async getSomeRegulation(e) {
       const id = e.target.dataset.id
+      const locale = this.$store.state.locale
       try {
-        const response = await this.$store.dispatch('getRegulationData', {id})
+        const response = await this.$store.dispatch('getRegulationData', {id, locale})
         this.$store.state.regulation = response.data
         this.modal = this.$popup()
         const win = this.modal.init(this.$el.querySelector('.modal'))

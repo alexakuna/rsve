@@ -131,7 +131,8 @@ name: "Section",
         const response = await this.createSection({
           title: this.title,
           description: [this.description],
-          images: [this.img]
+          images: [this.img],
+          locale: this.$store.state.locale
         })
         this.$store.state.home = response.data
         this.isVisible = true
